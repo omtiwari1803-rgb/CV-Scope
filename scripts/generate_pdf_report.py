@@ -31,12 +31,13 @@ def convert_md_to_html() -> None:
     html_body = html_body.replace('<pre><code class="language-mermaid">', '<div class="mermaid">')
     html_body = html_body.replace('</code></pre>', '</div>')
 
-    # Convert absolute/relative image paths if any exist
-    enhanced_img_uri = (OUTPUTS_DIR / "enhanced.png").as_uri()
-    matches_img_uri = (OUTPUTS_DIR / "feature_matches.png").as_uri()
-    epipolar_img_uri = (OUTPUTS_DIR / "epipolar_composite.png").as_uri()
-    stereo_img_uri = (OUTPUTS_DIR / "disparity_depth_analysis.png").as_uri()
-    edge_img_uri = (OUTPUTS_DIR / "edge_segmentation_summary.png").as_uri()
+    # Use optimized report figures (reduces PDF size from 10MB to ~1MB for GitHub preview)
+    fig_dir = REPORT_DIR / "figures"
+    enhanced_img_uri = (fig_dir / "enhanced.jpg").as_uri()
+    matches_img_uri = (fig_dir / "feature_matches.jpg").as_uri()
+    epipolar_img_uri = (fig_dir / "epipolar_composite.jpg").as_uri()
+    stereo_img_uri = (fig_dir / "disparity_depth_analysis.jpg").as_uri()
+    edge_img_uri = (fig_dir / "edge_segmentation_summary.jpg").as_uri()
 
     # Embed visual gallery section into HTML
     gallery_html = f"""
