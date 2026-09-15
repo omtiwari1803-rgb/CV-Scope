@@ -1,0 +1,42 @@
+{
+    "project": "CV-Scope: Computer Vision Scene Geometry and Depth Analysis System",
+    "version": "1.0.0",
+    "timestamp": "2026-09-15T20:15:09.982870+00:00",
+    "mode": "depth",
+    "inputs": {
+        "input": null,
+        "left": "data/stereo/left.png",
+        "right": "data/stereo/right.png"
+    },
+    "algorithms_applied": [
+        "Stereo Disparity Estimation (SGBM)",
+        "Disparity Normalization & False-Color Mapping (Inferno)",
+        "Triangulation Depth Recovery (Z = f * B / d)"
+    ],
+    "processing_times_ms": {
+        "Stereo_Depth": 69.63
+    },
+    "metrics": {
+        "Disparity_Statistics": {
+            "algorithm": "SGBM",
+            "num_disparities": 64,
+            "block_size": 7,
+            "min_disparity": 0.56,
+            "max_disparity": 63.0,
+            "mean_disparity": 35.99,
+            "valid_percentage": 61.78
+        },
+        "Depth_Statistics": {
+            "valid_pixel_count": 189797,
+            "valid_ratio": 0.6178,
+            "min_depth": 1.27,
+            "max_depth": 29.091,
+            "mean_depth": 4.037,
+            "median_depth": 2.222,
+            "depth_type": "metric (meters)"
+        }
+    },
+    "warnings": [],
+    "status": "SUCCESS",
+    "total_processing_time_ms": 69.63
+}

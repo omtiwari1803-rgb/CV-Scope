@@ -1,0 +1,76 @@
+classDiagram
+    class CLI_Controller {
+        +main()
+        +build_arg_parser()
+        +run_full_pipeline()
+    }
+    class PreprocessingModule {
+        +to_grayscale()
+        +resize_image()
+        +denoise_gaussian()
+        +denoise_median()
+        +normalize_image()
+        +run_preprocessing()
+    }
+    class EnhancementModule {
+        +equalize_histogram()
+        +apply_clahe()
+        +sharpen_image()
+        +run_enhancement()
+    }
+    class SegmentationModule {
+        +compute_sobel()
+        +detect_canny_edges()
+        +apply_threshold()
+        +morphological_cleanup()
+        +segment_regions()
+        +run_edge_segmentation()
+    }
+    class FeaturesModule {
+        +detect_sift_features()
+        +match_features()
+        +extract_matched_points()
+        +render_matches()
+        +run_feature_analysis()
+    }
+    class GeometryModule {
+        +estimate_homography()
+        +compute_reprojection_error()
+        +warp_perspective()
+        +create_alignment_overlay()
+        +run_geometry_analysis()
+    }
+    class EpipolarModule {
+        +estimate_fundamental_matrix()
+        +compute_epipolar_lines()
+        +draw_epipolar_geometry()
+        +run_epipolar_analysis()
+    }
+    class StereoModule {
+        +validate_stereo_pair()
+        +compute_disparity()
+        +normalize_disparity_for_visualization()
+        +compute_depth_from_disparity()
+        +run_stereo_depth_pipeline()
+    }
+    class ReportingModule {
+        +AnalysisReport
+        +save_json()
+    }
+    class VisualizationModule {
+        +plot_enhancement_comparison()
+        +plot_edge_segmentation_grid()
+        +plot_geometry_alignment()
+        +plot_epipolar_lines()
+        +plot_disparity_and_depth()
+    }
+
+    CLI_Controller --> PreprocessingModule
+    CLI_Controller --> EnhancementModule
+    CLI_Controller --> SegmentationModule
+    CLI_Controller --> FeaturesModule
+    CLI_Controller --> GeometryModule
+    CLI_Controller --> EpipolarModule
+    CLI_Controller --> StereoModule
+    CLI_Controller --> ReportingModule
+    CLI_Controller --> VisualizationModule

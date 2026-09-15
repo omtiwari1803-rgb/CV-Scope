@@ -1,0 +1,46 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant CLI as main.py
+    participant Pre as Preprocessing & Enhancement
+    participant Edge as Edge & Segmentation
+    participant Feat as Feature Extraction & Matching
+    participant Geom as Homography & Geometry
+    participant Epi as Epipolar Geometry
+    participant Stereo as Stereo Disparity & Depth
+    participant Vis as Visualization Engine
+    participant Rep as JSON Reporting
+
+    User->>CLI: python main.py --mode full --left L.png --right R.png
+    CLI->>Pre: run_preprocessing(L.png) & run_enhancement()
+    Pre-->>CLI: Denoised, CLAHE, Sharpened arrays & stats
+    CLI->>Vis: plot_enhancement_comparison()
+    CLI->>Rep: record_time("Preprocessing"), update_metrics()
+
+    CLI->>Edge: run_edge_segmentation(L_gray)
+    Edge-->>CLI: Sobel, Canny, Otsu mask, Connected Components
+    CLI->>Vis: plot_edge_segmentation_grid()
+    CLI->>Rep: record_time("Edges"), update_metrics(edge_density)
+
+    CLI->>Feat: run_feature_analysis(L, R)
+    Feat-->>CLI: SIFT keypoints, 128-D descriptors, Lowe's matches
+    CLI->>Vis: render_matches()
+    CLI->>Rep: update_metrics(matches, match_ratio)
+
+    CLI->>Geom: run_geometry_analysis(pts1, pts2)
+    Geom-->>CLI: Homography H, RANSAC inliers, Warped image
+    CLI->>Vis: plot_geometry_alignment()
+    CLI->>Rep: update_metrics(H, reprojection_error)
+
+    CLI->>Epi: run_epipolar_analysis(pts1, pts2)
+    Epi-->>CLI: Fundamental matrix F, Epipolar lines
+    CLI->>Vis: plot_epipolar_lines()
+    CLI->>Rep: update_metrics(F, epipolar_inliers)
+
+    CLI->>Stereo: run_stereo_depth_pipeline(L, R)
+    Stereo-->>CLI: StereoSGBM disparity & metric depth Z = fB/d
+    CLI->>Vis: plot_disparity_and_depth()
+    CLI->>Rep: update_metrics(disparity_stats, depth_stats)
+
+    CLI->>Rep: finalize() & save_json(analysis_report.json)
+    CLI-->>User: Console Execution Summary & Exit Code 0

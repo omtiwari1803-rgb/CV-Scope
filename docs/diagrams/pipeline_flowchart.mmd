@@ -1,0 +1,18 @@
+flowchart TD
+    Start([Input: Single Image or Stereo Pair]) --> Val[Stage 0: Dimension & Format Validation]
+    Val --> Pre[Stage 1: Preprocessing & Enhancement]
+    Pre --> Edge[Stage 2: Edge & Segmentation Analysis]
+    Edge --> Feat[Stage 3: SIFT Keypoint & Descriptor Extraction]
+    
+    Feat --> CheckStereo{Stereo Pair Provided?}
+    CheckStereo -- No --> ReportSingle[Generate Single-Image Telemetry & Visuals]
+    CheckStereo -- Yes --> Match[Stage 4: FLANN/BF Matching with Lowe's Ratio Test]
+    
+    Match --> Geom[Stage 5: Planar Homography Estimation via RANSAC]
+    Geom --> Epi[Stage 6: Fundamental Matrix & Epipolar Geometry via RANSAC]
+    Epi --> Stereo[Stage 7: StereoSGBM Disparity Computation]
+    Stereo --> Depth[Stage 8: Metric / Relative Depth Triangulation Z = fB / d]
+    
+    Depth --> ReportStereo[Generate Stereo Visual Artifacts & JSON Report]
+    ReportSingle --> End([Pipeline Complete])
+    ReportStereo --> End

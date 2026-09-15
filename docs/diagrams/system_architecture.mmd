@@ -1,0 +1,51 @@
+graph TD
+    CLI[main.py CLI Controller] --> Config[config.py Dataclasses]
+    CLI --> Utils[src/utils.py I/O & Validation]
+    
+    subgraph Low-Level Vision Layer
+        P1[src/preprocessing.py]
+        P2[src/enhancement.py]
+    end
+    
+    subgraph Mid-Level Vision Layer
+        P3[src/segmentation.py]
+    end
+    
+    subgraph Feature & Multi-View Geometry Layer
+        P4[src/features.py]
+        P5[src/geometry.py]
+        P6[src/epipolar.py]
+    end
+    
+    subgraph Dense Stereo & Triangulation Layer
+        P7[src/stereo.py]
+    end
+    
+    subgraph Presentation & Telemetry Layer
+        V[src/visualization.py]
+        R[src/reporting.py]
+    end
+    
+    CLI --> P1
+    CLI --> P2
+    CLI --> P3
+    CLI --> P4
+    CLI --> P5
+    CLI --> P6
+    CLI --> P7
+    
+    P1 --> V
+    P2 --> V
+    P3 --> V
+    P4 --> V
+    P5 --> V
+    P6 --> V
+    P7 --> V
+    
+    P1 --> R
+    P2 --> R
+    P3 --> R
+    P4 --> R
+    P5 --> R
+    P6 --> R
+    P7 --> R
